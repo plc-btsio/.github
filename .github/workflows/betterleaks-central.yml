@@ -1,0 +1,16 @@
+name: "🧐 Betterleaks central"
+
+on:
+  workflow_call:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch repository code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Scan Betterleaks using the Docker image
+        run: docker run --rm --user $(id -u):$(id -g) -v ${{ github.workspace }}:/code ghcr.io/betterleaks/betterleaks:latest git /code -v
